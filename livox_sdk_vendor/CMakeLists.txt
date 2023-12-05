@@ -13,9 +13,8 @@ macro(build_livox_sdk)
   endif()
 
   include(ExternalProject)
-  externalproject_add(livox-sdk-${livox_sdk_REV}
-    GIT_REPOSITORY https://github.com/nassir90/Livox-SDK-memory-fix
-    GIT_TAG ${livox_sdk_REV}
+  externalproject_add(livox-sdk
+    GIT_REPOSITORY https://github.com/DroneBase/Livox-SDK.git
     GIT_SHALLOW OFF
     TIMEOUT 60
     CMAKE_ARGS

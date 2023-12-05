@@ -273,7 +273,7 @@ namespace livox_ros {
             return 0;
         }
 
-        livox_ros::PointCloud cloud;
+        pcl::PointCloud cloud;
         cloud.header.frame_id.assign(frame_id_);
         cloud.height = 1;
         cloud.width = 0;
