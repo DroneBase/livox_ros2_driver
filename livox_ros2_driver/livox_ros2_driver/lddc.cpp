@@ -118,7 +118,7 @@ namespace livox_ros {
         }
     }
 
-    void Lddc::InitPointcloud2MsgHeader(sensor_msgs::PointCloud2 &cloud) {
+    void Lddc::InitPointcloud2MsgHeader(sensor_msgs::msg::PointCloud2 &cloud) {
         cloud.header.frame_id.assign(frame_id_);
         cloud.height = 1;
         cloud.width = 0;
@@ -163,7 +163,7 @@ namespace livox_ros {
             return 0;
         }
 
-        sensor_msgs::PointCloud2 cloud;
+        sensor_msgs::msg::PointCloud2 cloud;
         InitPointcloud2MsgHeader(cloud);
         cloud.data.resize(packet_num * kMaxPointPerEthPacket *
                           sizeof(LivoxPointXyzrtl));
@@ -226,9 +226,9 @@ namespace livox_ros {
         cloud.is_bigendian = false;
         cloud.is_dense = true;
         cloud.data.resize(cloud.row_step); /** Adjust to the real size */
-        rclcpp::Publisher<sensor_msgs::PointCloud2>::SharedPtr publisher =
+        rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr publisher =
                 std::dynamic_pointer_cast < rclcpp::Publisher
-                < sensor_msgs::PointCloud2 >> (GetCurrentPublisher(handle));
+                < sensor_msgs::msg::PointCloud2 >> (GetCurrentPublisher(handle));
         if (kOutputToRos == output_type_) {
             publisher->publish(cloud);
         } else {
@@ -331,13 +331,13 @@ namespace livox_ros {
             last_timestamp = timestamp;
         }
 
-        rclcpp::Publisher<sensor_msgs::PointCloud2>::SharedPtr publisher =
-                std::dynamic_pointer_cast < rclcpp::Publisher < sensor_msgs::PointCloud2 >>
+        rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr publisher =
+                std::dynamic_pointer_cast < rclcpp::Publisher < sensor_msgs::msg::PointCloud2 >>
                                                                                               (GetCurrentPublisher(
                                                                                                       handle));
 
         if (kOutputToRos == output_type_) {
-            sensor_msgs::PointCloud2 msg;
+            sensor_msgs::msg::PointCloud2 msg;
             pcl::toROSMsg(cloud, msg);
             publisher->publish(msg);
         } else {
@@ -486,14 +486,14 @@ namespace livox_ros {
 #endif
         }
         // Tixiao - added
-        sensor_msgs::PointCloud2 cloud_temp;
+        sensor_msgs::msg::PointCloud2 cloud_temp;
         pcl::toROSMsg(*tixiao_cloud_out, cloud_temp);
         cloud_temp.header = livox_msg.header;
 //        Maybe?
         RCLCPP_INFO_ONCE(cur_node_->get_logger(), "My log message %d", 4);
         
-        static rclcpp::Publisher<sensor_msgs::PointCloud2>::SharedPtr pub_tixiao_cloud =
-                cur_node_->create_publisher<sensor_msgs::PointCloud2>("/points_raw", 10);
+        static rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_tixiao_cloud =
+                cur_node_->create_publisher<sensor_msgs::msg::PointCloud2>("/points_raw", 10);
         pub_tixiao_cloud->publish(cloud_temp);
         tixiao_cloud_out->clear();
         if (!lidar->data_is_pubulished) {
@@ -621,7 +621,7 @@ namespace livox_ros {
             RCLCPP_INFO(cur_node_->get_logger(),
                         "%s publish use PointCloud2 format", topic_name.c_str());
             return cur_node_->create_publisher<
-                    sensor_msgs::PointCloud2>(topic_name, queue_size);
+                    sensor_msgs::msg::PointCloud2>(topic_name, queue_size);
         } else if (kLivoxCustomMsg == msg_type) {
             RCLCPP_INFO(cur_node_->get_logger(),
                         "%s publish use livox custom format", topic_name.c_str());
