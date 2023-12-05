@@ -6,7 +6,7 @@
   <description>
     Wrapper around livox_sdk that ships with a CMake module
   </description>
-  <maintainer email="esteve.fernandez@autoware.org">Esteve Fernandez</maintainer>
+  <maintainer email="sean.ackels@zeitview.com">Sean Ackels</maintainer>
   <license>Apache License 2.0</license>
 
   <url type="website">https://github.com/Livox-SDK/Livox-SDK</url>
