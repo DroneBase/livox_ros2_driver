@@ -68,7 +68,7 @@ int LdsHub::InitLdsHub(std::vector<std::string> &broadcast_code_strs,
     return -1;
   }
 
-  DisableConsoleLogger();
+  // DisableConsoleLogger();
 
   if (!Init()) {
     Uninit();
